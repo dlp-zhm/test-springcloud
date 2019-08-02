@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: zuul
+    
+server:
+  port: 3001
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka
+
+#需要开启重试，默认不开启
+zuul:
+  retryable: true
+
+
+#前面是服务id名,后面是路径. 当这两种设置的相同的时候,是可以省略不写的,zuul默认有这样的配置
+#zuul:
+#  routes:
+#    item-service: /item-service/**
+#    user-service: /user-service/**
+#    order-service: /order-service/**
+
+
+#配置 zuul 开启重试，并配置 ribbon 重试参数
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 1000
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
+
+# 配置hystrix 没连通就降级的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+ 
+#暴露 hystrix.stream 监控端点          
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+        
+        
+        
+        
