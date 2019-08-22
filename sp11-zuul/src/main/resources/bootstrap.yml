@@ -7,8 +7,16 @@ spring:
         service-id: config-server
       name: zuul
       profile: dev #看配置中心是不是写的dev环境
+
+    inetutils:
+      ignored-interfaces:
+        - VM.*
+#      preferred-networks:
+#        - 192.168.0
       
 eureka:
   client:
     service-url:
       defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka
+
+
